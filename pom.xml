@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
-<groupId>com.fabrikam.azure.appdemo</groupId>
-<artifactId>AzureAppDemo</artifactId>
+<groupId>com.fabrikam.azure.java-demo</groupId>
+<artifactId>java-demo</artifactId>
 <packaging>war</packaging>
 <version>0.0.1-SNAPSHOT</version>
-<name>AzureAppDemo</name>
+<name>java-demo</name>
 <dependencies>
     <dependency>
         <groupId>com.microsoft.azure</groupId>
@@ -68,13 +68,31 @@
                         <goal>upload-single</goal>
                     </goals>
                     <configuration>
-                        <fromFile>${basedir}/target/AzureAppDemo-0.0.1-SNAPSHOT.war</fromFile>
+                        <fromFile>${basedir}/target/java-demo-0.0.1-SNAPSHOT.war</fromFile>
                         <url>${azureFtpUrl}</url>
                         <toFile>webapps/ROOT.war</toFile>
                         <serverId>azure-hello-world</serverId>
                     </configuration>
                 </execution>
             </executions>
+        </plugin>
+        <plugin>
+            <!--*************************************************-->
+            <!-- Deploy to Tomcat in App Service Linux           -->
+            <!--*************************************************-->
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>azure-webapp-maven-plugin</artifactId>
+            <version>1.4.0</version>
+            <configuration>
+                <!-- Web App information -->
+                <resourceGroup>devops-rg</resourceGroup>
+                <appName>mcw-java-maven</appName>
+                <region>southeastasia</region>
+
+                <!-- Java Runtime Stack for Web App on Linux-->
+                <linuxRuntime>tomcat 9.0-jre8</linuxRuntime>
+
+            </configuration>
         </plugin>
     </plugins>
 </build>
